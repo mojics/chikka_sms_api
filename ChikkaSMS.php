@@ -6,6 +6,12 @@
  * 
  * Usage: $var = new NexoMessage ( $account_key, $account_password );
  * Methods:
+ *      
+ *      sendText()
+ *      receiveTxt()
+ *      reply()
+ *      fetchNotifications()
+ *      
  *     sendText ( $to, $from, $message, $unicode = null )
  *     pushWap ( $to, $from, $title, $url, $validity = 172800000 )
  *     displayOverview( $nexmo_response=null )*     
@@ -46,7 +52,17 @@ class ChikkaSMS {
         
     }
     
+    public function receiveText(){
+        
+    }
     
+    public function reply(){
+        
+    }
+    
+    public function fetchNotifications(){
+        
+    }
     
 }
 
