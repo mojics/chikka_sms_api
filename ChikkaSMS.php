@@ -27,20 +27,20 @@
  * @author kcmojica
  */
 class ChikkaSMS {
-    
+
     //put your code here
     private $clientId = '';
     private $secretKey = '';
     private $shortCode = '';
-    
-    
     //Chikka's default URI for sending SMS
-    private $chikkaSendUrl = 'https://post.chikka.com/smsapi/request';
+    const ChikkaSendUrl = 'https://post.chikka.com/smsapi/request';
+    const SendRequest = 'send';
+    const ReceiveRequest = 'incoming';
+    const ReplyRequest = 'reply';
+    const NotificationRequest = 'outgoing';
     
-    private $sendRequest = 'send';
-    private $receiveRequest = 'incoming';
-    private $replyRequest = 'reply';
-    private $notificationRequest = 'outgoing';
+    
+    
     
     /**
      * SendText allows sending of SMS message to Chikka API
@@ -48,22 +48,47 @@ class ChikkaSMS {
      * @param type $to
      * @param type $message
      */
-    public function sendText($requestId, $to, $message ){
+    public function sendText($requestId, $to, $message) {
+        $requestId = strip_tags($requestId);
+        echo $to;
+        echo $message;
+
+        //Request ID should not be blank
+        if(strlen($requestId) < 1){
+            trigger_error('Request ID is required');
+            return false;
+        }
+        
+        // Making sure strings are UTF-8 encoded
+        if (!is_numeric($to) && !mb_check_encoding($to, 'UTF-8')) {
+            trigger_error('TO needs to be a valid UTF-8 encoded string');
+            return false;
+        }
+
+        if (!mb_check_encoding($message, 'UTF-8')) {
+            trigger_error('Message needs to be a valid UTF-8 encoded string');
+            return false;
+        }
+        
+        //urlencode 
+        $message = urlencode($message);
+        
+        
+
+    }
+
+    public function receiveText() {
         
     }
-    
-    public function receiveText(){
+
+    public function reply() {
         
     }
-    
-    public function reply(){
+
+    public function fetchNotifications() {
         
     }
-    
-    public function fetchNotifications(){
-        
-    }
-    
+
 }
 
 ?>

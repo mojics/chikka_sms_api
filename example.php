@@ -4,5 +4,8 @@
  * @author Ronald Allan Mojica
  * 
  */
+include('ChikkaSMS.php');
 
+$chikkaAPI = new ChikkaSMS();
+$chikkaAPI->sendText('12345', '09156186673', 'test');
 ?>
