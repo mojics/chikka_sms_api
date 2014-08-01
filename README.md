@@ -16,15 +16,17 @@ Features
 
 Installation and sample usage
 ----
-> <?
-> include('ChikkaSMS.php');
-> 
-> $clientId = 'xxxxx';
-> $secretKey = 'xxxxxx';
-> $shortCode = 'xxxxxx';
-> $chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
-> $response = $chikkaAPI->sendText('UNIQUEMESSAGEID', 'MOBILENUMBER', 'YOURMESSAGE');
 
+```sh
+<?
+include('ChikkaSMS.php');
+
+$clientId = 'xxxxx';
+$secretKey = 'xxxxxx';
+$shortCode = 'xxxxxx';
+$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
+$response = $chikkaAPI->sendText('UNIQUEMESSAGEID', 'MOBILENUMBER', 'YOURMESSAGE');
+```
 
 
 License
