@@ -18,7 +18,7 @@ Installation and sample usage
 ----
 
 
-##### Send SMS
+### Send SMS
 ```sh
 <?php
 include('ChikkaSMS.php');
