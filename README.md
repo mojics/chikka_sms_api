@@ -14,10 +14,18 @@ Features
 
 
 
-Installation
+Installation and sample usage
 ----
+> <?
+> include('ChikkaSMS.php');
+> 
+> $clientId = 'xxxxx';
+> $secretKey = 'xxxxxx';
+> $shortCode = 'xxxxxx';
+> $chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
+> $response = $chikkaAPI->sendText('UNIQUEMESSAGEID', 'MOBILENUMBER', 'YOURMESSAGE');
 
-> To follow
+
 
 License
 ----
