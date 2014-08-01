@@ -18,7 +18,7 @@ Installation and sample usage
 ----
 
 ```sh
-<?
+<?php
 include('ChikkaSMS.php');
 
 $clientId = 'xxxxx';
