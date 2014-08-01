@@ -6,6 +6,15 @@
  */
 include('ChikkaSMS.php');
 
-$chikkaAPI = new ChikkaSMS();
-$chikkaAPI->sendText('12345', '09156186673', 'test');
+$clientId = 'xxxxx';
+$secretKey = 'xxxxxx';
+$shortCode = 'xxxxxx';
+$chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
+$response = $chikkaAPI->sendText('1234561', '6391561866732', 'tests');
+if($response->status != 200){
+	header("HTTP/1.1 " . $response->status . " " . $response->message);
+}
+
+echo $response->description;
+
 ?>
