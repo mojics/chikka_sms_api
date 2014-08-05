@@ -18,7 +18,7 @@ Installation and sample usage
 ----
 
 
-### Send SMS
+#### Send SMS
 ```sh
 <?php
 include('ChikkaSMS.php');
@@ -31,7 +31,7 @@ $response = $chikkaAPI->sendText('UNIQUEMESSAGEID', 'MOBILENUMBER', 'YOURMESSAGE
 ```
 
 
-### Receive notifications from Chikka
+#### Receive notifications from Chikka
 
 ```sh
 <?php
