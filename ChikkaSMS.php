@@ -40,6 +40,26 @@ class ChikkaSMS {
         );
     
     
+    private $expectedChikkaResponse = array(
+        'message_type'=>'',
+        'short_code' => '',
+        'message_id' => '',
+        'status' => '',
+        'credits_cost' => '',
+        'timestamp' => '');
+    
+    private $responseAccepted = array(
+        'status' => 'Accepted',
+        'message' => 'Message has been successfully processed.',
+        'code' => 202
+        );
+    
+    private $responseDenied = array(
+        'status' => 'Error',
+        'message' => 'Message has not been processed.',
+        'code' => 400
+        );
+    
     /**
      * [__construct description]
      * @param [type] $clientId  [description]
@@ -152,13 +172,35 @@ class ChikkaSMS {
     }
 
     /**
-     * [fetchNotifications description]
-     * @todo
+     * [fetchNotifications description] removed the logic of showing Accepted and Error on receiving notification from Chikka API
+     * the operator should be the one doing it
+     *  
      */
     public function receiveNotifications() {
+        $fromChikka = $_POST;
         
+        if (count(array_diff_key($this->expectedChikkaResponse, $fromChikka)) != 0) {
+            //header("HTTP/1.1 " . $this->responseDenied['code']  . " " . $this->responseDenied['status']);
+            //echo $this->responseDenied['message'];
+            $fromChikka = null;
+        }
+        //else{
+        //    echo $this->responseAccepted['message'];
+        //}
+
+        
+        return $fromChikka;
     }
 
+    /**
+     * @todo remove this part
+     * @param type $response
+     */
+    //private function receiveApiResponse($response){
+        
+    //  
+    //}
+    
     /**
      * sendApiRequest - the functionality that sends request to Chikka API endpoint
      * @param  [array] $data post params 
@@ -210,10 +252,13 @@ class ChikkaSMS {
      * @param  [string] $requestType This is the message type of the sms 
      * @return [type]              
      */
-    private function parseApiResponse($response, $requestType){
+    private function parseApiResponse($response, $requestType = null){
         //combine the current response from Chikka and the message type that was requested
+        var_dump($response);
         $response = json_decode($response,true);
-        $response['request_type'] = $requestType;
+        if($requestType){
+            $response['request_type'] = $requestType;
+        }
         
         return json_decode(json_encode($response));;
     }
