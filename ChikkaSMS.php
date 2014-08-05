@@ -3,7 +3,7 @@
 /**
  * Class ChikkaSMS Class handles the methods and properties of sending or receiving an SMS message.
  * The main inspiration of this class was from Nexmo PHP Library
- * 
+ *  
  * Usage: $var = new NexoMessage ( $account_key, $account_password );
  * Methods:
  *      
@@ -14,11 +14,6 @@
  *      
  */
 
-/**
- * Description of ChikkaSMS
- *
- * @author kcmojica
- */
 class ChikkaSMS {
 
     //authorization
@@ -115,7 +110,7 @@ class ChikkaSMS {
      * @param [String] [cost] [Amount to charge: Free, 1, 2.50, 5, 10, 15]
      * @param [String] [message] [UTF-8 string]
      */
-    public function reply($requestID, $messageID, $to, $cost, $message,) {
+    public function reply($requestID, $messageID, $to, $cost, $message) {
         //Request ID should not be blank
         if(strlen($messageID) < 1){
             trigger_error('Message ID is required');
@@ -133,7 +128,7 @@ class ChikkaSMS {
             return false;
         }
 
-        if (array_key_exists($cose, $this->requestCost)){
+        if (array_key_exists($cost, $this->requestCost)){
             trigger_error('The cost value only allows FREE, 1, 2.5, 5, 10, and 15');
             return false;
         }
@@ -141,7 +136,7 @@ class ChikkaSMS {
         //urlencode 
         $message = urlencode($message);
 
-        //sendText post params
+        //reply post params
         $replyData = array(
             'message_type' => $this->ReplyRequest,
             'mobile_number' => $to,
@@ -149,7 +144,7 @@ class ChikkaSMS {
             'message_id' => $messageID,
             'message' => $message,
             'cost' => $this->requestCost[$cost],
-            'request_id' => $requestId
+            'request_id' => $requestID
             );
         
         //send Api request to Chikka and process it 
@@ -219,9 +214,8 @@ class ChikkaSMS {
         //combine the current response from Chikka and the message type that was requested
         $response = json_decode($response,true);
         $response['request_type'] = $requestType;
-        $response = json_decode(json_encode($response));
         
-        return $response;
+        return json_decode(json_encode($response));;
     }
 
 }
