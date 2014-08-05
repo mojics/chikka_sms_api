@@ -10,7 +10,7 @@
  *      sendText($requestId, $to, $message)
  *      receiveTxt()
  *      reply()
- *      fetchNotifications()
+ *      receiveNotifications()
  *      
  */
 
@@ -21,11 +21,12 @@
  */
 class ChikkaSMS {
 
-    //put your code here
+    //authorization
     private $clientId = '';
     private $secretKey = '';
     private $shortCode = '';
     private $sslVerify = false;
+    
     //Chikka's default URI for sending SMS
     private $chikkaSendUrl = 'https://post.chikka.com/smsapi/request';
     
@@ -33,6 +34,15 @@ class ChikkaSMS {
     private $receiveRequest = 'incoming';
     private $replyRequest = 'reply';
     private $notificationRequest = 'outgoing';
+
+    private $requestCost = array(
+        'free' => 'FREE', 
+        '1' =>1, 
+        '2.5'=> 2.5, 
+        '5'=> 5, 
+        '10' => 10, 
+        '15' => 15
+        );
     
     
     /**
@@ -55,12 +65,12 @@ class ChikkaSMS {
      * @param type $message The SMS message 
      */
     
-    public function sendText($requestId, $to, $message) {
-        $requestId = strip_tags($requestId);
+    public function sendText($messageID, $to, $message) {
+        $messageID = strip_tags($messageID);
 
         //Request ID should not be blank
-        if(strlen($requestId) < 1){
-            trigger_error('Request ID is required');
+        if(strlen($messageID) < 1){
+            trigger_error('Message ID is required');
             return false;
         }
         
@@ -83,7 +93,7 @@ class ChikkaSMS {
             'message_type' => $this->sendRequest,
             'mobile_number' => $to,
             'shortcode' => $this->shortCode,
-            'message_id' => $requestId,
+            'message_id' => $messageID,
             'message' => $message
             );
         
@@ -91,27 +101,66 @@ class ChikkaSMS {
         return $this->sendApiRequest($sendData);
     }
 
-    /**
-     * [receiveText description]
-     * @todo 
-     */
     public function receiveText() {
         
     }
 
+
     /**
-     * [reply description]
-     * @todo
+     * Reply - ability to send reply message  
+     *
+     * @param [String] [requestID] [The requestID supplied by Chikka SMS]
+     * @param [String] [messageID] [Unique identifier]
+     * @param [String] [to] [mobile number starint 63]
+     * @param [String] [cost] [Amount to charge: Free, 1, 2.50, 5, 10, 15]
+     * @param [String] [message] [UTF-8 string]
      */
-    public function reply() {
+    public function reply($requestID, $messageID, $to, $cost, $message,) {
+        //Request ID should not be blank
+        if(strlen($messageID) < 1){
+            trigger_error('Message ID is required');
+            return false;
+        }
         
+        // Making sure strings are UTF-8 encoded
+        if (!is_numeric($to) && !mb_check_encoding($to, 'UTF-8')) {
+            trigger_error('TO needs to be a valid UTF-8 encoded string');
+            return false;
+        }
+
+        if (!mb_check_encoding($message, 'UTF-8')) {
+            trigger_error('Message needs to be a valid UTF-8 encoded string');
+            return false;
+        }
+
+        if (array_key_exists($cose, $this->requestCost)){
+            trigger_error('The cost value only allows FREE, 1, 2.5, 5, 10, and 15');
+            return false;
+        }
+
+        //urlencode 
+        $message = urlencode($message);
+
+        //sendText post params
+        $replyData = array(
+            'message_type' => $this->ReplyRequest,
+            'mobile_number' => $to,
+            'shortcode' => $this->shortCode,
+            'message_id' => $messageID,
+            'message' => $message,
+            'cost' => $this->requestCost[$cost],
+            'request_id' => $requestId
+            );
+        
+        //send Api request to Chikka and process it 
+        return $this->sendApiRequest($replyData);
     }
 
     /**
      * [fetchNotifications description]
      * @todo
      */
-    public function fetchNotifications() {
+    public function receiveNotifications() {
         
     }
 
