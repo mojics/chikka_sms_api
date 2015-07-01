@@ -1,6 +1,6 @@
 <?php
 /**
- * This file will show a simple implementation of Chikka API SMS library
+ * This file will show a simple implementation on how to send SMS using Chikka API
  * @author Ronald Allan Mojica
  * 
  */
@@ -12,11 +12,6 @@ $shortCode = 'xxxxxx';
 $chikkaAPI = new ChikkaSMS($clientId,$secretKey,$shortCode);
 $response = $chikkaAPI->sendText('1234561', '6391561866732', 'tests');
 
+header("HTTP/1.1 " . $response->status . " " . $response->message);
 
-//if($response->status != 200){
-	header("HTTP/1.1 " . $response->status . " " . $response->message);
-//}
-
-echo $response->description;
-
-?>
+exit($response->description);
