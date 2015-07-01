@@ -30,6 +30,7 @@ class ChikkaSMS {
     private $replyRequest = 'reply';
     private $notificationRequest = 'outgoing';
 
+    //Based from Chikka's price breakdown
     private $requestCost = array(
         'free' => 'FREE', 
         '1' =>1, 
@@ -38,7 +39,6 @@ class ChikkaSMS {
         '10' => 10, 
         '15' => 15
         );
-    
     
     private $expectedChikkaResponse = array(
         'message_type'=>'',
@@ -166,7 +166,6 @@ class ChikkaSMS {
             'request_id' => $requestID
             );
         
-        //send Api request to Chikka and process it 
         return $this->sendApiRequest($replyData);
     }
 
