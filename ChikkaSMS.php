@@ -153,7 +153,6 @@ class ChikkaSMS {
             return false;
         }
 
-        //urlencode 
         $message = urlencode($message);
 
         //reply post params
@@ -180,27 +179,11 @@ class ChikkaSMS {
         $fromChikka = $_POST;
         
         if (count(array_diff_key($this->expectedChikkaResponse, $fromChikka)) != 0) {
-            //header("HTTP/1.1 " . $this->responseDenied['code']  . " " . $this->responseDenied['status']);
-            //echo $this->responseDenied['message'];
             $fromChikka = null;
         }
-        //else{
-        //    echo $this->responseAccepted['message'];
-        //}
-
-        
         return $fromChikka;
     }
 
-    /**
-     * @todo remove this part
-     * @param type $response
-     */
-    //private function receiveApiResponse($response){
-        
-    //  
-    //}
-    
     /**
      * sendApiRequest - the functionality that sends request to Chikka API endpoint
      * @param  [array] $data post params 
@@ -253,8 +236,6 @@ class ChikkaSMS {
      * @return [type]              
      */
     private function parseApiResponse($response, $requestType = null){
-        //combine the current response from Chikka and the message type that was requested
-        var_dump($response);
         $response = json_decode($response,true);
         if($requestType){
             $response['request_type'] = $requestType;
