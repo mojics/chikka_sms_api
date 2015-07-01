@@ -7,11 +7,10 @@ Chikka API PHP Library is a simple yet rich featured php library that lets you u
 
 Features
 ----
-  - Ability to send SMS/Text
+  - Ability to send SMS
   - Receive an SMS
-  - Reply 
-  - Fetch sms notifications
-
+  - Reply to message
+  - Fetch SMS notifications
 
 
 Installation and sample usage
@@ -32,6 +31,7 @@ $response = $chikkaAPI->sendText('UNIQUEMESSAGEID', 'MOBILENUMBER', 'YOURMESSAGE
 
 
 #### Receive notifications from Chikka
+You will be providing callback url to Chikka setup page and put this script inside of it.
 
 ```sh
 <?php
@@ -52,8 +52,6 @@ if($_POST){
     }
     var_dump($chikkaAPI->receiveNotifications());
 }
-
-
 
  ```
 
